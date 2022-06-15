@@ -8,11 +8,13 @@ import imutils
 import time
 import cv2
 import os
+from cvzone import HandTrackingModule
 
 def detect_and_predict_mask(frame, faceNet, maskNet, glassnet):
+
+	#hand detector
 	# grab the dimensions of the frame and then construct a blob
 	# from it
-	global preds_glass
 	(h, w) = frame.shape[:2]
 	blob = cv2.dnn.blobFromImage(frame, 1.0, (224, 224),
 		(104.0, 177.0, 123.0))
@@ -27,6 +29,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet, glassnet):
 	faces = []
 	locs = []
 	preds = []
+	preds_glass = []
 
 	# loop over the detections
 	for i in range(0, detections.shape[2]):
@@ -92,6 +95,10 @@ while True:
 	frame = vs.read()
 	frame = imutils.resize(frame, width=600)
 
+	# hand detector
+	hand_detector = HandTrackingModule.HandDetector()
+	hands, img = hand_detector.findHands(frame)
+
 	# detect faces in the frame and determine if they are wearing a
 	# face mask or not
 	(locs, preds, preds_glasses) = detect_and_predict_mask(frame, faceNet, maskNet, glassNet)
@@ -143,6 +150,7 @@ while True:
 
 	# show the output frame
 	cv2.imshow("Frame", frame)
+	# cv2.imshow("Hands detected", img)
 	key = cv2.waitKey(1) & 0xFF
 
 	# if the `q` key was pressed, break from the loop

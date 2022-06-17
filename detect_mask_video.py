@@ -105,7 +105,6 @@ while True:
 	# loop over the detected face locations and their corresponding
 	# locations
 	face_count = 0
-	print ("locs and preds", locs, preds)
 	for (box, pred, pred_glass) in zip(locs, preds, preds_glasses):
 		face_count += 1
 

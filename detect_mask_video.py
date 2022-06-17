@@ -12,7 +12,6 @@ from cvzone import HandTrackingModule
 
 def detect_and_predict_mask(frame, faceNet, maskNet, glassnet):
 
-	#hand detector
 	# grab the dimensions of the frame and then construct a blob
 	# from it
 	(h, w) = frame.shape[:2]
@@ -150,7 +149,6 @@ while True:
 
 	# show the output frame
 	cv2.imshow("Frame", frame)
-	# cv2.imshow("Hands detected", img)
 	key = cv2.waitKey(1) & 0xFF
 
 	# if the `q` key was pressed, break from the loop
